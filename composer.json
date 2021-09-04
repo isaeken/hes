@@ -1,0 +1,47 @@
+{
+    "name": "isaeken/hes",
+    "version": "dev-master",
+    "type": "library",
+    "description": "PHP Hayat Eve S\u0000\u0000ar API",
+    "keywords": ["api", "hayat eve sığar", "hes", "korona", "covid19"],
+    "homepage": "https://github.com/isaeken/hes",
+    "license": "MIT",
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "Isa Eken",
+            "email": "hello@isaeken.com.tr",
+            "homepage": "https://www.isaeken.com.tr",
+            "role": "Founder"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "autoload": {
+        "psr-4": {
+            "IsaEken\\Hes\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IsaEken\\Hes\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/support": "^8.58",
+        "isaeken/thinks": "^1.0",
+        "nesbot/carbon": "^2.52"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "symfony/var-dumper": "^5.3"
+    }
+}
