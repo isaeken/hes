@@ -9,7 +9,7 @@ use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertTrue;
 
-$mock = new MockHandler;
+$mock = new MockHandler();
 $handlerStack = HandlerStack::create($mock);
 Hes::client([
     'handler' => $handlerStack,
