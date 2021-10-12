@@ -43,12 +43,13 @@ class Hes extends Model
     private Cache|null $cache = null;
 
     /**
+     * @param  array  $config
      * @return Client
      */
-    public static function client(): Client
+    public static function client(array $config = []): Client
     {
         if (static::$client === null) {
-            static::$client = new Client();
+            static::$client = new Client($config);
         }
 
         return static::$client;
