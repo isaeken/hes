@@ -1,9 +1,17 @@
 {
     "name": "isaeken/hes",
-    "version": "dev-master",
+    "version": "1.0",
     "type": "library",
-    "description": "PHP Hayat Eve S\u0000\u0000ar API",
-    "keywords": ["api", "hayat eve sığar", "hes", "korona", "covid19"],
+    "description": "PHP Hayat Eve Sığar API",
+    "keywords": [
+        "api",
+        "hayat eve sığar",
+        "hes",
+        "korona",
+        "corona",
+        "corona virus",
+        "covid19"
+    ],
     "homepage": "https://github.com/isaeken/hes",
     "license": "MIT",
     "prefer-stable": true,
@@ -21,7 +29,8 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "./vendor/bin/pest --no-coverage",
+        "test-coverage": "./vendor/bin/phpunit --coverage-html coverage"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +50,11 @@
         "nesbot/carbon": "^2.52"
     },
     "require-dev": {
+        "nunomaduro/collision": "^5.10",
+        "orchestra/testbench": "^6.21",
+        "pestphp/pest": "^1.20",
         "phpunit/phpunit": "^9.5",
-        "symfony/var-dumper": "^5.3"
+        "symfony/var-dumper": "^5.3",
+        "vimeo/psalm": "^4.10"
     }
 }

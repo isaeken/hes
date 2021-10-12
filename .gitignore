@@ -8,3 +8,12 @@ composer.lock
 Thumbs.db
 .phpunit.result.cache
 phpunit.xml
+.php_cs
+.php_cs.cache
+build
+coverage
+docs
+psalm.xml
+testbench.yaml
+node_modules
+.php-cs-fixer.cache
