@@ -55,31 +55,31 @@ class Hes extends Model
     }
 
     /**
-     * @param string $phone
+     * @param  string  $phone
      * @return bool
      * @throws GuzzleException
      */
     public static function sendCode(string $phone): bool
     {
-        return static::client()->request('POST', static::Endpoint . '/api/send-code-to-login', [
+        return static::client()->request('POST', static::Endpoint.'/api/send-code-to-login', [
                 RequestOptions::JSON => [
-                    'phone' => '+90' . $phone,
+                    'phone' => '+90'.$phone,
                 ],
             ])->getStatusCode() === 201;
     }
 
     /**
-     * @param string $code
-     * @param string $phone
+     * @param  string  $code
+     * @param  string  $phone
      * @return false|static
      * @throws GuzzleException
      */
     public static function login(string $code, string $phone): static|false
     {
-        $request = static::client()->request('POST', static::Endpoint . '/api/authenticate-with-code', [
+        $request = static::client()->request('POST', static::Endpoint.'/api/authenticate-with-code', [
             RequestOptions::JSON => [
                 'password' => $code,
-                'phone' => '+90' . $phone,
+                'phone' => '+90'.$phone,
                 'rememberMe' => true,
             ],
         ]);
@@ -96,8 +96,8 @@ class Hes extends Model
     }
 
     /**
-     * @param string|null $token
-     * @param string|null $phone
+     * @param  string|null  $token
+     * @param  string|null  $phone
      */
     public function __construct(string|null $token = null, string|null $phone = null)
     {
@@ -108,16 +108,16 @@ class Hes extends Model
     }
 
     #[ArrayShape(['Content-Type' => "string", 'Authorization' => "string"])]
- private function makeHeaders(): array
- {
-     return [
+    private function makeHeaders(): array
+    {
+        return [
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $this->getToken(),
+            'Authorization' => 'Bearer '.$this->getToken(),
         ];
- }
+    }
 
     /**
-     * @param bool $freshen
+     * @param  bool  $freshen
      * @return User|false
      */
     public function getUser(bool $freshen = false): User|false
@@ -125,7 +125,7 @@ class Hes extends Model
         return $this->cache->remember('user', function () {
             throw_if($this->getToken() === null);
 
-            $request = static::client()->request('GET', static::Endpoint . '/api/account-with-token', [
+            $request = static::client()->request('GET', static::Endpoint.'/api/account-with-token', [
                 RequestOptions::HEADERS => $this->makeHeaders(),
             ]);
 
@@ -141,7 +141,7 @@ class Hes extends Model
     }
 
     /**
-     * @param bool $freshen
+     * @param  bool  $freshen
      * @return Collection|false
      * @throws Throwable
      */
@@ -150,7 +150,7 @@ class Hes extends Model
         return $this->cache->remember('codes', function () {
             throw_if($this->getToken() === null);
 
-            $request = static::client()->request('POST', static::Endpoint . '/services/hescodeproxy/api/hes-codes', [
+            $request = static::client()->request('POST', static::Endpoint.'/services/hescodeproxy/api/hes-codes', [
                 RequestOptions::HEADERS => $this->makeHeaders(),
             ]);
 
@@ -169,18 +169,18 @@ class Hes extends Model
     }
 
     /**
-     * @param string $code
-     * @param bool   $freshen
+     * @param  string  $code
+     * @param  bool  $freshen
      * @return HesCode|false
      * @throws Throwable
      */
     public function getCode(string $code, bool $freshen = false): HesCode|false
     {
-        return $this->cache->remember('code-' . $code, function () use ($code) {
+        return $this->cache->remember('code-'.$code, function () use ($code) {
             throw_if($this->getToken() === null);
 
             $code = Str::replace(['-', ' '], '', $code);
-            $request = static::client()->request('POST', static::Endpoint . '/services/hescodeproxy/api/check-hes-code', [
+            $request = static::client()->request('POST', static::Endpoint.'/services/hescodeproxy/api/check-hes-code', [
                 RequestOptions::HEADERS => $this->makeHeaders(),
                 RequestOptions::JSON => [
                     'hes_code' => $code,
