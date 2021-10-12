@@ -30,15 +30,15 @@ class Hes extends Model
     use HasPhone;
     use HasToken;
 
-    const Endpoint = 'https://hessvc.saglik.gov.tr';
+    public const Endpoint = 'https://hessvc.saglik.gov.tr';
 
     /**
-     * @var Client|null $client
+     * @var Client|null
      */
     private static Client|null $client = null;
 
     /**
-     * @var Cache|null $cache
+     * @var Cache|null
      */
     private Cache|null $cache = null;
 
@@ -48,7 +48,7 @@ class Hes extends Model
     public static function client(): Client
     {
         if (static::$client === null) {
-            static::$client = new Client;
+            static::$client = new Client();
         }
 
         return static::$client;
@@ -91,6 +91,7 @@ class Hes extends Model
         $user = new User(json_decode($request->getBody()->getContents(), true));
         $hes = new static($user->getToken());
         $hes->cache->set('user', $user);
+
         return $hes;
     }
 
@@ -103,16 +104,17 @@ class Hes extends Model
         parent::__construct();
         $this->setToken($token);
         $this->setPhone($phone);
-        $this->cache = new Cache;
+        $this->cache = new Cache();
     }
 
-    #[ArrayShape(['Content-Type' => "string", 'Authorization' => "string"])] private function makeHeaders(): array
-    {
-        return [
+    #[ArrayShape(['Content-Type' => "string", 'Authorization' => "string"])]
+ private function makeHeaders(): array
+ {
+     return [
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $this->getToken(),
         ];
-    }
+ }
 
     /**
      * @param bool $freshen
@@ -133,7 +135,8 @@ class Hes extends Model
 
             $response = json_decode($request->getBody()->getContents(), true);
             $response['token'] = $response['id_token'] = $this->getToken();
-            return (new User)->fill($response);
+
+            return (new User())->fill($response);
         }, $freshen);
     }
 
